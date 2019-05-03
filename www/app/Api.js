@@ -30,7 +30,7 @@ class Api {
   }
 
   uploadImage(file, uploadProgressCallback) {
-    return this._getUploadSasUri(file.name)
+    return this._getUploadSasUri(file.name,'vivek')
       .then(sasUrl => this._uploadBlob(sasUrl, file, uploadProgressCallback))
       .then(() => this._waitForFile(file.name))
   }
@@ -49,13 +49,14 @@ class Api {
         });
   }
 
-  _getUploadSasUri(filename) {
+  _getUploadSasUri(filename,cowname) {
     const config = {
       headers: {
         'X-ZUMO-AUTH': this.authToken
       },
       params: {
-        filename
+        filename,
+        cowname
       }
     }
     return axios.get(`${this.baseUrl}/api/GetUploadUrl`, config)
