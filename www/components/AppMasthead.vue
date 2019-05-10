@@ -1,6 +1,6 @@
 <template>
   <div class="masthead">
-    <img src="/cow-back.png" alt="corgi space background" width="100%"/>
+    <img src="/cow-math.png" alt=" " width="50%"/>
   </div>
 </template>
 

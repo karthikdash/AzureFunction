@@ -17,6 +17,7 @@
         ref="hoverpanel"
       >
       <img :src="image.thumbnailPath" width="180" height="180" />
+      <p style="color:black;"> {{image.id}} </p>
       </div>
     </div>
   </section>

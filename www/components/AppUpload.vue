@@ -5,6 +5,7 @@
         <input 
           type="file" 
           id="upload-file" 
+          multiple="multiple"
           ref="uploadFile"
           placeholder="Image URL" 
           class="form-control" 
@@ -13,6 +14,9 @@
       </div>
       <div class="formbutton">
         <button id="upload-button" @click="uploadFile">Upload!</button>
+        <div>
+          <input v-model="cowname" placeholder="Add Cow Name">
+        </div>
         <button id="cancel-button" @click="$emit('hide-upload')">Cancel</button>
       </div>
     </form>
@@ -24,9 +28,10 @@ export default {
   props: [ 'api' ],
   data() {
     return {
-      imgFile: null,
+      imgFile: [],
       imgURL: '',
-      loading: false
+      loading: false,
+      cowname: 'default'
     }
   },
   methods: {
@@ -42,16 +47,22 @@ export default {
       if (this.imgFile) {
         this.$emit('file-uploading')
         uploadProgress(0)
-        this.api.uploadImage(this.imgFile, uploadProgress)
-          .then(() => {
-            this.$refs.uploadFile.value = null
-            this.$emit('file-upload-completed')
-          })
+
+        for(this.i=0; this.i < this.imgFile.length ; this.i++) {
+
+          this.api.uploadImage(this.imgFile[this.i], this.cowname, this.i, uploadProgress)
+            .then(() => {
+              this.$refs.uploadFile.value = null
+              //this.$emit('file-upload-completed')
+            })
+        }
+        this.$emit('file-upload-completed')
       }
     },
     fileChanged(e) {
       const files = e.target.files || e.dataTransfer.files
-      this.imgFile = files.length ? files[0] : null
+      //this.imgFile = files.length ? files[0] : null
+      this.imgFile = files
     }
   }
 }

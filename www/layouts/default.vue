@@ -18,7 +18,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  background: #191919 url(/bk-gradient.jpg) no-repeat center bottom fixed;
+  background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

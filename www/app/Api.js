@@ -29,10 +29,17 @@ class Api {
       })
   }
 
-  uploadImage(file, uploadProgressCallback) {
-    return this._getUploadSasUri(file.name,'vivek')
-      .then(sasUrl => this._uploadBlob(sasUrl, file, uploadProgressCallback))
-      .then(() => this._waitForFile(file.name))
+  uploadImage(file, cowname, trigger, uploadProgressCallback) {
+    if ( trigger == 0 ) {
+      return this._getUploadSasUri(cowname, cowname, trigger)
+        .then(sasUrl => this._uploadBlob(sasUrl, file, uploadProgressCallback))
+        .then(() => this._waitForFile(file.name))
+
+    } else {
+      return this._getUploadSasUri(file.name, cowname, trigger)
+        .then(sasUrl => this._uploadBlob(sasUrl, file, uploadProgressCallback))
+        .then(() => this._waitForFile(file.name))
+    }
   }
 
   getUsername() {
@@ -49,14 +56,15 @@ class Api {
         });
   }
 
-  _getUploadSasUri(filename,cowname) {
+  _getUploadSasUri(filename,cowname, trigger) {
     const config = {
       headers: {
         'X-ZUMO-AUTH': this.authToken
       },
       params: {
         filename,
-        cowname
+        cowname,
+        trigger
       }
     }
     return axios.get(`${this.baseUrl}/api/GetUploadUrl`, config)
